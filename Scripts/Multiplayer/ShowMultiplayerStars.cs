@@ -1,0 +1,41 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class ShowMultiplayerStars : MonoBehaviour
+{
+    public int cantidadNiveles;
+    public int numeroEstrellas;
+    public Sprite candado;
+    // Start is called before the first frame update
+    void Start()
+    {
+        for(int i=0;i<cantidadNiveles;i++)
+        {  
+            numeroEstrellas=EstrellasMultiplayer.estrellasMultiplayer.getStars(gameObject.transform.GetChild(i).GetComponent<GoToLevel>().nivel);
+            if(0<numeroEstrellas)
+            {
+                for(int j=0;j<numeroEstrellas;j++)
+                {
+                    gameObject.transform.GetChild(i).GetChild(j).gameObject.SetActive(true);
+                }   
+            }
+            else
+            {
+                for(int j=i+1;j<cantidadNiveles;j++)
+                {
+                    gameObject.transform.GetChild(j).GetComponent<Image>().sprite=candado;//cambia el boton normal a un candado
+                    gameObject.transform.GetChild(j).GetComponent<Button>().interactable=false;//evita que piques los niveles que no haz alcanzadp
+                    i=cantidadNiveles;
+                }   
+            }
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
